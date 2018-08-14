@@ -9,6 +9,7 @@ import (
 	"os"
 	"encoding/json"
 	"strconv"
+	"net/http/httputil"
 )
 
 //Config Structure
@@ -72,8 +73,8 @@ func queryYelp(req *http.Request) (resp *http.Response) {
 	if(config.Debug){writeLog(curl.URL.String())}
 	resp, err = http.DefaultClient.Do(curl)
 	if(config.Debug){
-		body, _ := ioutil.ReadAll(resp.Body)
-		writeLog(string(body))
+		dump, _ := httputil.DumpResponse(resp, true)
+		writeLog(string(dump))
 	}
 	if err != nil {
 		panic(err)
@@ -88,6 +89,11 @@ func queryYelp(req *http.Request) (resp *http.Response) {
  * @param  req  http.Request	http request pointer of incomming request
  */
 func getHandler(resp http.ResponseWriter, req *http.Request) {
+	config := getConfig()
+	if(config.Debug){
+		dump, _ := httputil.DumpRequest(req, true)
+		writeLog(string(dump))
+	}
 	yelpResp := queryYelp(req)
 	defer yelpResp.Body.Close()
 	yelpData, err := ioutil.ReadAll(yelpResp.Body)
