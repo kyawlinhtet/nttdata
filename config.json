@@ -1,4 +1,5 @@
 {
     "url" : "https://api.yelp.com/v3/businesses/search",
-    "authorization" : "Bearer mBACJX3ogLQizy41U8Eoy1Ly1QYF-RMY31n3GM8cG4p3XvK9ItunwA_0f9nYvC1Ivj1H9HOnonU778O-bS30wTCR0qukVoPUvZt5H9spoUg5Deg9LG6Oo2gJSgFwW3Yx"
+    "authorization" : "Bearer mBACJX3ogLQizy41U8Eoy1Ly1QYF-RMY31n3GM8cG4p3XvK9ItunwA_0f9nYvC1Ivj1H9HOnonU778O-bS30wTCR0qukVoPUvZt5H9spoUg5Deg9LG6Oo2gJSgFwW3Yx",
+    "debug" : true
 }

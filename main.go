@@ -15,6 +15,7 @@ import (
 type Config struct {
 	Url string
 	Authorization string
+	Debug bool
 }
 //Config for Yelp API return Limit
 const limit = 15;
@@ -68,8 +69,12 @@ func queryYelp(req *http.Request) (resp *http.Response) {
 	query := curl.URL.Query()
 	curl.URL.RawQuery = buildRawQuery(req,&query)
 	curl.Header.Set("Authorization", config.Authorization)
-	writeLog(curl.URL.String())
+	if(config.Debug){writeLog(curl.URL.String())}
 	resp, err = http.DefaultClient.Do(curl)
+	if(config.Debug){
+		body, _ := ioutil.ReadAll(resp.Body)
+		writeLog(string(body))
+	}
 	if err != nil {
 		panic(err)
 	}
