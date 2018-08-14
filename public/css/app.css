@@ -1,0 +1,17 @@
+#selSort{
+    max-width: 120px;
+    display: inline-block;
+}
+.result-list .card{
+    min-width: 350px;
+    width: 350px;
+    margin-bottom: 15px;
+}
+.result-list .card .card-img-top{
+    max-height: 230px;
+}
+#modalMap .modal-dialog{
+    max-width: 70%;
+    height: 70%;
+}
+#modalMap #map{height:100%;}

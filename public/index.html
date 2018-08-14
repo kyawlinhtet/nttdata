@@ -1,0 +1,59 @@
+<html>
+<head></head>
+<body>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/app.css"></link>
+    <div class="container">
+        <div class="search-form p-3 mx-auto rounded border">
+            <form id="frmSearch" action="">
+                <div class="form-group ">
+                    <label class="sr-only" for="txtKeyword">Try &quot;Chicken Rice, Mcdonal&quot;</label>
+                    <input type="text" class="form-control" id="txtKeyword" name="txtKeyword" placeholder="Try &quot;Chicken Rice, Mcdonal&quot;">
+                </div>
+                <div class="form-group ">
+                    <label class="sr-only" for="txtLocation">Try &quot;China Town, Serangoon&quot;</label>
+                    <input type="text" class="form-control" id="txtLocation" name="txtLocation" placeholder="Try &quot;China Town, Serangoon&quot;">
+                </div>
+                <div class="form-group "><button id="btnSearch" type="button" class="btn btn-primary">Search</button></div>
+                <div class="form-group ">
+                    <label for="txtLocation">Sort By</label>
+                    <select class="form-control" id="selSort" name="selSort">
+                        <option value="best_match">Best Match</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                </div>
+                <input type="hidden" id="page" name="page" value=""/>                
+            </form>
+        </div>
+        <div class="result-list card-deck mt-4">
+
+        </div>
+        <nav aria-label="navigation">
+            <ul class="pagination justify-content-center">
+            </ul>
+        </nav>
+    </div>
+    <div class="modal fade" id="modalMap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mapTitle">Title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?"></script>
+    <script src="/js/jquery.twbsPagination.min.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
