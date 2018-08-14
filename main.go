@@ -1,8 +1,3 @@
-/*
-* Http (curl) request in golang
-* @author Shashank Tiwari
- */
-
 package main
 
 import (
@@ -16,11 +11,15 @@ import (
 	"strconv"
 )
 
+//Config Structure
 type Config struct {
 	Url string
 	Authorization string
 }
+//Config for Yelp API return Limit
 const limit = 15;
+const configFileName = "config.json";
+const LogFileName = "log";
 
 func main() {
 	http.Handle("/", http.FileServer(http.Dir("./public")))
@@ -28,6 +27,13 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
+/**
+ * Return Get Request string for yelp API 
+ *
+ * @param  req  *http.Request	http request pointer of current request
+ * @param  query *url.Values	url values pointer from yelp request
+ * @return rawQuery	string	query string
+ */
 func buildRawQuery(req *http.Request,query *url.Values) (rawQuery string) {
 	req.ParseForm();
 	keyword := req.FormValue("txtKeyword")
@@ -43,12 +49,16 @@ func buildRawQuery(req *http.Request,query *url.Values) (rawQuery string) {
 	query.Add("sort_by", sort)
 	query.Add("limit", strconv.FormatInt(limit, 10))
 	if(page != 1){query.Add("offset", strconv.FormatInt((page*limit), 10))}
-	//query.Add("latitude", req.FormValue("txtKeyword"))
-	//query.Add("longitude", req.FormValue("txtKeyword"))
 	rawQuery = query.Encode()
 	return
 }
 
+/**
+ * Parse form data and get data from Yelp API
+ *
+ * @param  req  *http.Request	http request pointer of current request
+ * @return resp	*http.Response	response pointer from Yelp API reponse
+ */
 func queryYelp(req *http.Request) (resp *http.Response) {
 	config := getConfig()
 	curl, err := http.NewRequest(http.MethodGet, config.Url, nil)
@@ -65,7 +75,13 @@ func queryYelp(req *http.Request) (resp *http.Response) {
 	}
 	return resp
 }
-
+/**
+ * Handler function for /get url to get Data from YELP API
+ * and return back to front end
+ *
+ * @param  req  http.ResponseWriter	Response writer that is used to send response to front end
+ * @param  req  http.Request	http request pointer of incomming request
+ */
 func getHandler(resp http.ResponseWriter, req *http.Request) {
 	yelpResp := queryYelp(req)
 	defer yelpResp.Body.Close()
@@ -75,9 +91,13 @@ func getHandler(resp http.ResponseWriter, req *http.Request) {
 	}
 	fmt.Fprint(resp, string(yelpData))
 }
-
+/**
+ * Read config from json file and return Config Struct
+ *
+ * @return  config  Config	Config Struct
+ */
 func getConfig() (config Config) {
-	file, err := os.Open("config.json")
+	file, err := os.Open(configFileName)
 	defer file.Close()
 	if err != nil {
 		panic(err)
@@ -89,9 +109,13 @@ func getConfig() (config Config) {
 	}
 	return config
 }
-
+/**
+ * Write to log file
+ *
+ * @param  v  ...interface	interfaces that needed to be write to log file
+ */
 func writeLog(v ...interface{}){
-	f, err := os.OpenFile("log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	f, err := os.OpenFile(LogFileName, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}
